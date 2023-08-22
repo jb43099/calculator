@@ -21,7 +21,7 @@ body {
 .calculator-grid {
   display: grid;
   grid-template-columns: repeat(4, 12vw);
-  grid-template-rows: minmax(12vh, auto) repeat(5, 10vh);
+  grid-template-rows: minmax(15vh, auto) repeat(5, 10vh);
   background-color: #888;
   border-radius: 10px;
   text-align: center;
@@ -30,7 +30,7 @@ body {
   cursor: default;
   height: auto;
   width: auto;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .calculator-grid * {
@@ -91,4 +91,68 @@ button:active {
 
 .output .current-operand {
   font-size: 2.5rem;
+}
+
+/* **** MEDIA QUERIES *****/
+/* medium devices */
+@media screen and (max-width: 1000px) {
+  .calculator-grid {
+    grid-template-columns: repeat(4, 12vw);
+    grid-template-rows: minmax(14vh, auto) repeat(5, 8vh);
+    font-size: 1.5rem;
+  }
+
+  button {
+    font-size: 1.5rem;
+  }
+
+  .output .previous-operand {
+    font-size: 1rem;
+  }
+
+  .output .current-operand {
+    font-size: 2.5rem;
+  }
+}
+
+/* small devices */
+@media screen and (max-width: 700px) {
+  .calculator-grid {
+    grid-template-columns: repeat(4, 13vw);
+    grid-template-rows: minmax(12vh, auto) repeat(5, 8vh);
+    font-size: 1rem;
+  }
+
+  button {
+    font-size: 1.5rem;
+  }
+
+  .output .previous-operand {
+    font-size: 1rem;
+  }
+
+  .output .current-operand {
+    font-size: 2rem;
+  }
+}
+
+/* x-small devices */
+@media screen and (max-width: 400px) {
+  .calculator-grid {
+    grid-template-columns: repeat(4, 14vw);
+    grid-template-rows: minmax(12vh, auto) repeat(5, 8vh);
+    font-size: 0.75rem;
+  }
+
+  button {
+    font-size: 1rem;
+  }
+
+  .output .previous-operand {
+    font-size: 0.75rem;
+  }
+
+  .output .current-operand {
+    font-size: 1.5rem;
+  }
 }
