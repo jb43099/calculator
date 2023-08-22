@@ -17,6 +17,7 @@ class Calculator {
     }
 
     appendNumber(number) {
+        if (this.currentOperand > 9999999999999) return;
         if (number == '.' && this.currentOperand.includes('.')) return;
         this.currentOperand = this.currentOperand.toString() + number.toString();
     }
@@ -32,12 +33,57 @@ class Calculator {
     }
 
     compute() {
+        let computation;
+        const prev = +this.previousOperand;
+        const current = +this.currentOperand;
+        if (isNaN(prev) || isNaN(current)) return;
+        switch (this.operation) {
+            case '+':
+                computation = prev + current
+                break
+            case '-':
+                computation = prev - current
+                break
+            case '*':
+                computation = prev * current
+                break
+            case '÷':
+                computation = prev / current
+                break
+            default:
+                return
+        }
+        this.currentOperand = computation;
+        this.operation = undefined;
+        this.previousOperand = '';
+    }
 
+    cleanUpNumber(number) {
+        const stringNumber = number.toString();
+        const integerDigits = parseFloat(stringNumber.split('.')[0]);
+        const decimalDigits = stringNumber.split('.')[1];
+        let integerDisplay;
+        if (isNaN(integerDigits)) {
+            integerDisplay = '0';
+        } else {
+            integerDisplay = integerDigits.toLocaleString('en', {
+                maximumFractionDigits: 0
+            })
+        }
+        if (decimalDigits != null) {
+            return `${integerDisplay}.${decimalDigits}`;
+        } else {
+            return integerDisplay;
+        }
     }
 
     updateDisplay() {
-        this.currentOperandTextElement.innerText = this.currentOperand;
-        this.previousOperandTextElement.innerText = this.previousOperand;
+        this.currentOperandTextElement.innerText = this.cleanUpNumber(this.currentOperand);
+        if (this.operation != null) {
+            this.previousOperandTextElement.innerText = `${this.cleanUpNumber(this.previousOperand)} ${this.operation}`
+        } else {
+            this.previousOperandTextElement.innerText = '';
+        }
     }
 }
 
@@ -50,7 +96,7 @@ const allClearButton = document.querySelector('[data-all-clear');
 const previousOperandTextElement = document.querySelector('[data-previous-operand]');
 const currentOperandTextElement = document.querySelector('[data-current-operand]');
 
-// EVENT LISTENERS , FUNCTION CALLS, CREATE CALC
+// EVENT LISTENERS 
 const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement);
 
 numberButtons.forEach(button => button.addEventListener('click', () => {
